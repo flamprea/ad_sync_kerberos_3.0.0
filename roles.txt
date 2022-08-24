@@ -1,0 +1,12 @@
+#RBAC Role, LDAP Query,@Logon Domain,@UPN
+#SysAdmins,dsget <something>,@DOMAIN.COM
+#BL_USERS+dsquery group -name BLADELOGIC_USERS | dsget group -members | dsget user -samid | findstr /v dsget | findstr /v samid+@DEMODRIVE.COM
+#BLADELOGIC_ADMINS+ldapsearch -b "dc=domain,dc=com" -R -1 -h dc1.domain.com -o mech=GSSAPI -o realm=DOMAIN.COM -o authzid="" -o authid="" -L "cn=BLADELOGIC_ADMINS" member 2>/dev/null | grep member | awk -F, '{print $1}' | awk -F= '{print $2}'+@DOMAIN.COM
+#BL_GROUP+ldapsearch -Hldap://dc1.demodrive.com -Y GSSAPI -b "dc=demodrive,dc=com" -L "cn=BL_GROUP" member | grep member | awk -F, '{print $1}' | awk -F= '{print $2}'+@DEMODRIVE.COM
+#The example Below uses simple authentication. Password is clear text in the query string and GSSAPI is not required. This is not a secure method.
+#BL_GROUP+ldapsearch -Hldap://dc1.demodrive.com -x -D "cn=joe,cn=users,dc=demodrive,dc=com" -w password -b "dc=bl,dc=demo,dc=com" -LLL "cn=Domain Admins" | grep member | awk -F, '{print $1}' | awk -F= '{print $2}'+@DEMODRIVE.COM
+#A few more Examples listed below using GSSAPI
+Eng_AIX+ldapsearch -Hldap://dc1.demodrive.com -Y GSSAPI -b "dc=demodrive,dc=com" -LLL "cn=NCG_Eng_AIX_AP" | grep member | awk -FCN= '{print $2}' | awk -F,OU= '{print $1}' | awk -F' ' '{print $NF}'+@DEMODRIVE.COM
+Eng_Linux+ldapsearch -Hldap://dc1.demodrive.com -Y GSSAPI -b "dc=demodrive,dc=com" -LLL "cn=Eng_Linux" | grep member | awk -FCN= '{print $2}' | awk -F,OU= '{print $1}' | awk -F' ' '{print $NF}'+@DEMODRIVE.COM
+Eng_Solaris+ldapsearch -Hldap://dc1.demodrive.com -Y GSSAPI -b "dc=demodrive,dc=com" -LLL "cn=Eng_Solaris" | grep member | awk -FCN= '{print $2}' | awk -F,OU= '{print $1}' | awk -F' ' '{print $NF}'+@DEMODRIVE.COM
+Eng_Windows+ldapsearch -Hldap://dc1.demodrive.com -Y GSSAPI -b "dc=demodrive,dc=com" -LLL "cn=Eng_Windows" | grep member | awk -FCN= '{print $2}' | awk -F,OU= '{print $1}' | awk -F' ' '{print $NF}'+@DEMODRIVE.COM

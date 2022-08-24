@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE command_inventory SYSTEM "file://bladelogic.com/dtds/Command-Inventory.dtd">
+<command_inventory>
+    <name_space name="RBACRole">
+ <complex_command command_id="createRolePS" published="yes" release="yes">
+            <name>createRolePS</name>
+            <description>
+                <author>Bill Robinson</author>
+		<paragraph>
+		 <string_literal/>
+                </paragraph>
+                <return_value_info/>
+            </description>
+            <argument_list>
+                <argument desc="name of role to be created" name="roleName">java.lang.String</argument>
+                <argument desc="description of role to be created" name="roleDesc">java.lang.String</argument>
+                <argument desc="agent acl flags" name="flags">int</argument>
+                <argument desc="unix user map" name="unixUser">java.lang.String</argument>
+                <argument desc="windows property map" name="winProp">java.lang.String</argument>
+            </argument_list>
+            <commands_to_execute>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>createInstance</name>
+                    <input/>
+					<store_result><name>role</name></store_result>
+                </command_invocation>
+				<command_invocation>
+                    <namespace_ref>Utility</namespace_ref>
+                    <name>setTargetObject</name>
+                    <input>role</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>setName</name>
+                    <input>$roleName$</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>setDescription</name>
+                    <input>$roleDesc$</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>getAgentAcl</name>
+                    <input></input>
+                    <store_result><name>agentAcl</name></store_result>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>Utility</namespace_ref>
+                    <name>setTargetObject</name>
+                    <input>agentAcl</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>AgentAcl</namespace_ref>
+                    <name>setFlags</name>
+                    <input>$flags$</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>AgentAcl</namespace_ref>
+                    <name>setServerPropertyUsed</name>
+                    <input>true 1</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>AgentAcl</namespace_ref>
+                    <name>setUserMapServerPropertyName</name>
+                    <input>$winProp$ 1</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>AgentAcl</namespace_ref>
+                    <name>setUserEquivalancy</name>
+                    <input>$unixUser$ 2</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>Utility</namespace_ref>
+                    <name>setTargetObject</name>
+                    <input>role</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>create</name>
+                    <input/>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>getDBKey</name>
+                    <input/>
+                </command_invocation>
+            </commands_to_execute>
+        </complex_command>
+
+ <complex_command command_id="modifyRolePS" published="yes" release="yes">
+            <name>modifyRolePS</name>
+            <description>
+                <author>Bill Robinson</author>
+                <paragraph>
+                 <string_literal/>
+                </paragraph>
+                <return_value_info/>
+            </description>
+            <argument_list>
+		<argument desc="name of role to be created" name="roleName">java.lang.String</argument>
+                <argument desc="agent acl flags" name="flags">int</argument>
+		<argument desc="unix user map" name="unixUser">java.lang.String</argument>
+                <argument desc="windows property map" name="winProp">java.lang.String</argument>
+            </argument_list>
+            <commands_to_execute>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>findByName</name>
+                    <input>$roleName$</input>
+					<store_result><name>role</name></store_result>
+                </command_invocation>
+				<command_invocation>
+                    <namespace_ref>Utility</namespace_ref>
+                    <name>setTargetObject</name>
+                    <input>role</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>getAgentAcl</name>
+                    <input></input>
+                    <store_result><name>agentAcl</name></store_result>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>Utility</namespace_ref>
+                    <name>setTargetObject</name>
+                    <input>agentAcl</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>AgentAcl</namespace_ref>
+                    <name>setFlags</name>
+                    <input>$flags$</input>
+                </command_invocation>
+		<command_invocation>
+		    <namespace_ref>AgentAcl</namespace_ref>
+		    <name>setServerPropertyUsed</name>
+		    <input>true 1</input>
+		</command_invocation>
+                <command_invocation>
+                    <namespace_ref>AgentAcl</namespace_ref>
+                    <name>setUserMapServerPropertyName</name>
+                    <input>$winProp$ 1</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>Utility</namespace_ref>
+                    <name>setTargetObject</name>
+                    <input>role</input>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>update</name>
+                    <input/>
+                </command_invocation>
+                <command_invocation>
+                    <namespace_ref>RBACRole</namespace_ref>
+                    <name>getDBKey</name>
+                    <input/>
+                </command_invocation>
+            </commands_to_execute>
+        </complex_command>
+	<complex_command command_id="isRoleExistsPS" published="yes" release="yes">
+            <name>isRoleExistsPS</name>
+            <description>
+                <author/>
+                <paragraph>
+                    <string_literal/>
+                </paragraph>
+                <return_value_info/>
+            </description>
+            <argument_list>
+                <argument desc="" name="roleName">java.lang.String</argument>
+            </argument_list>
+	    <commands_to_execute>
+            <command_invocation>
+                <namespace_ref>RBACRole</namespace_ref>
+                <name>isRoleExists-api</name>
+                <input>$roleName$</input>
+            </command_invocation>
+	    </commands_to_execute>
+        </complex_command>
+    </name_space>
+</command_inventory>
+
